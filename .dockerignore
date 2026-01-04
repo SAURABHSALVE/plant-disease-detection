@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+env/
+venv/
+.env
+.git
+*.log
+build/
+dist/
+.DS_Store
+# If you prefer to mount models at runtime, remove models/ from this ignore list
+# models/
+venv/
+__pycache__/
+*.pyc
+.git
+.gitignore
