@@ -44,7 +44,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/plant-disease-api:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/plant-disease-api:${{ github.sha }}
 
-      - name: Warn: skipping Docker push (missing secrets)
+      - name: "Warn: skipping Docker push (missing secrets)"
         if: steps.validate.outputs.secrets_present != 'true'
         run: |
           echo "Skipping Docker Hub login and push because DOCKERHUB_USERNAME or DOCKERHUB_TOKEN is not set."
