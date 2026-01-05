@@ -1,80 +1,120 @@
 # 🌱 Plant Disease Detection API
 
+*A Production-Grade Deep Learning System for Precision Agriculture*
+
 ![Docker Image Size (latest)](https://img.shields.io/docker/image-size/saurabhsalve/plant-disease-detection/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/saurabhsalve/plant-disease-detection)
 ![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.1.0-EE4C2C.svg)
 
-A production-ready, Dockerized REST API for detecting plant diseases from leaf images. Built with **FastAPI** and powered by a fine-tuned **ResNet50** deep learning model.
+A **production-ready, Dockerized REST API** for detecting plant diseases from leaf images using deep learning.
+This system is designed as an **end-to-end machine learning solution**, covering model training, inference, API serving, containerization, and deployment readiness.
+
+Built with **FastAPI**, powered by a **fine-tuned ResNet50**, and engineered with **real-world production practices**.
 
 ---
 
-## 🚀 Features
+## 📄 Project Report (Detailed Documentation)
 
-*   **Deep Learning Powered**: Utilizes a robust ResNet50 model fine-tuned for high accuracy.
-*   **FastAPI Backend**: High-performance, asynchronous Python web framework.
-*   **Dockerized**: Fully containerized for easy deployment anywhere (runs on any system with Docker).
-*   **Production Ready**: Uses Gunicorn with Uvicorn workers for stable handling of concurrent requests.
-*   **Lightweight**: Optimized build process to keep the Docker image size manageable.
+A **complete academic + industry-style project report** is available, covering:
+
+* Problem formulation and real-world agricultural impact
+* Dataset analysis and preprocessing
+* Deep learning architecture (ResNet50 fine-tuning)
+* Training strategy, evaluation metrics, and results
+* System architecture and API design
+* Dockerization and deployment strategy
+* Limitations, scalability considerations, and future scope
+
+📘 **Access the full project report here:**
+👉 **Google Drive Report:**
+[https://drive.google.com/file/d/1I4tcS0TFvWkNmIFmoU0DFBb7MxQ8i4TV/view?usp=drive_link](https://drive.google.com/file/d/1I4tcS0TFvWkNmIFmoU0DFBb7MxQ8i4TV/view?usp=drive_link)
+
+
+## 🚀 Key Features
+
+* **Deep Learning Powered**
+  Fine-tuned **ResNet50 CNN** trained on plant leaf disease images for high-accuracy classification.
+
+* **FastAPI Backend**
+  Asynchronous, high-performance REST API designed for ML inference workloads.
+
+* **Production-Grade Deployment**
+  Uses **Gunicorn with Uvicorn workers** to handle concurrent inference requests reliably.
+
+* **Dockerized & Portable**
+  Fully containerized application—runs identically across local machines, servers, and cloud platforms.
+
+* **Scalable Design**
+  Modular code structure allows easy model upgrades, batch inference, and cloud scaling.
 
 ---
 
 ## 🛠️ Quick Start
 
 ### Method 1: Run with Docker (Recommended)
-You can pull the pre-built image directly from Docker Hub and run it in seconds.
+
+Pull the pre-built image from Docker Hub:
 
 ```bash
 docker run -p 8000:8000 saurabhsalve/plant-disease-detection:latest
 ```
 
-The API will be available at [http://localhost:8000](http://localhost:8000).
+API will be live at:
+👉 [http://localhost:8000](http://localhost:8000)
+
+---
 
 ### Method 2: Run with Docker Compose
-If you have the source code cloned, you can use Docker Compose.
 
 ```bash
 docker-compose up -d
 ```
 
-### Method 3: Local Development (Python)
-If you want to run it without Docker (requires Python 3.10+):
+---
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/SAURABHSALVE/plant-disease-detection.git
-    cd plant-disease-detection
-    ```
+### Method 3: Local Development (Without Docker)
 
-2.  **Create a virtual environment:**
-    ```bash
-    python -m venv venv
-    # Windows
-    .\venv\Scripts\activate
-    # Linux/Mac
-    source venv/bin/activate
-    ```
+**Requirements:** Python 3.10+
 
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+1. Clone the repository:
 
-4.  **Run the server:**
-    ```bash
-    uvicorn src.api:app --reload
-    ```
+```bash
+git clone https://github.com/SAURABHSALVE/plant-disease-detection.git
+cd plant-disease-detection
+```
+
+2. Create & activate virtual environment:
+
+```bash
+python -m venv venv
+# Windows
+.\venv\Scripts\activate
+# Linux / Mac
+source venv/bin/activate
+```
+
+3. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Run the API:
+
+```bash
+uvicorn src.api:app --reload
+```
 
 ---
 
-## 📡 API Documentation
+## 📡 API Endpoints
 
 ### Health Check
-**GET** `/`
-Returns the status of the API.
 
-**Response:**
+**GET /**
+
 ```json
 {
   "status": "ok",
@@ -82,22 +122,27 @@ Returns the status of the API.
 }
 ```
 
-### Detect Disease
-**POST** `/predict`
-Upload an image of a plant leaf to get a prediction.
+---
 
-**Body:** `multipart/form-data`
-- `file`: The image file (JPG, PNG).
+### Disease Prediction
 
-**Example using cURL:**
+**POST /predict**
+
+**Request:**
+
+* Content-Type: `multipart/form-data`
+* Field: `file` (leaf image – JPG/PNG)
+
+**cURL Example:**
+
 ```bash
 curl -X POST "http://localhost:8000/predict" \
      -H "accept: application/json" \
-     -H "Content-Type: multipart/form-data" \
-     -F "file=@/path/to/your/leaf_image.jpg"
+     -F "file=@leaf_image.jpg"
 ```
 
 **Response:**
+
 ```json
 {
   "predicted_class": "Tomato___Early_blight",
@@ -107,25 +152,48 @@ curl -X POST "http://localhost:8000/predict" \
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ System Architecture & Project Structure
 
 ```
 plant-disease-detection/
-├── .github/              # GitHub Actions workflows
-├── models/               # Trained PyTorch models
+├── .github/              # CI/CD workflows
+├── models/               # Trained PyTorch model files
 │   └── plant_disease_resnet50_finetuned.pth
 ├── src/
-│   ├── api.py            # FastAPI application entry point
+│   ├── api.py            # FastAPI application
 │   ├── model.py          # ResNet50 model definition
-│   └── utils.py          # Image preprocessing utilities
-├── Dockerfile            # Docker instructions
-├── docker-compose.yml    # Docker Compose configuration
+│   └── utils.py          # Image preprocessing & helpers
+├── Dockerfile            # Production Docker build
+├── docker-compose.yml    # Multi-container orchestration
 ├── requirements.txt      # Python dependencies
-└── README.md             # This file
+└── README.md             # Documentation
 ```
 
+---
+
+## 🎯 Use Cases
+
+* Smart farming & precision agriculture
+* Early disease detection for crop yield improvement
+* AgriTech platforms & research prototypes
+* ML system design demonstration for interviews
+
+---
+
 ## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/SAURABHSALVE/plant-disease-detection/issues).
+
+Contributions, issues, and feature requests are welcome.
+Feel free to open an issue or submit a pull request.
+
+🔗 Issues:
+[https://github.com/SAURABHSALVE/plant-disease-detection/issues](https://github.com/SAURABHSALVE/plant-disease-detection/issues)
+
+---
 
 ## 📜 License
-This project is licensed under the MIT License.
+
+This project is licensed under the **MIT License**.
+
+---
+
+
